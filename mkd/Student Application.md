@@ -39,7 +39,7 @@ Contact to verify: fix-me!!!
 
 # Schedule Conflicts:
 
-Off-keyborads on Sundays, otherwise there is no time schedule confilcts. I am dedicated to GSoC this summer.
+Off-keyboards on Sundays, otherwise there is no time schedule conflicts. I am dedicated to GSoC this summer.
 
 # MENTORS
 
@@ -80,7 +80,7 @@ Current model structure is saved via `structure(model, class="MXFeedForwardModel
 
 There are two possible solutions suggested by discussion of MXNet's developers.
 
-1. Make model structure anobject via R's S4 methods.
+1. Make model structure object via R's S4 methods.
 2. Since model structure is saved as json string stored Rdata, two helper function are needed.
 
 *My plan for S4 methods to save model structure* is to use the following sample function:
@@ -101,7 +101,7 @@ Alternatively *write two helper functions* suggested by [MXNet's developer](http
 
 ## Deep learning specific domain
 
-Regular R users would find it not straightforward to use currently avaible basic functions, e.g. `mx.symbol.FullyConnected`, `mx.symbol.Activation` to build advanced neural networks, e.g. recurrent neural network (RNN). Hence, high-level functions for building advanced networks are highly suggested be supported by MXNet R package.
+Regular R users would find it not straightforward to use currently available basic functions, e.g. `mx.symbol.FullyConnected`, `mx.symbol.Activation` to build advanced neural networks, e.g. recurrent neural network (RNN). Hence, high-level functions for building advanced networks are highly suggested be supported by MXNet R package.
 
 There exists `mx.symbol.Convolution` for building convolution layer, but APIs for RNN are absent, as highlighted in MXNet's [issue #1420](https://github.com/dmlc/mxnet/issues/1420).
 
@@ -116,13 +116,13 @@ There exists `mx.symbol.Convolution` for building convolution layer, but APIs fo
 mx.symbol.RNN(symbol, name, hidden_dim, type = c('1toN', 'Nto1', 'NtoN', 'syncNtoN'), ...)
 ```
 
-On one hand, as a proof-of-concept I had already implemented RNN to learn 8-digit binary calculus using Rcpp starting from scratch (See [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)), e.g. learning $\,01111001 + 00010101 = 10001110\,$  for $\,121+21=142\,$. Because the each digit is equivalent to timestamp, shown as following figure, my proof-of-concept implementation was indeed equivalent to and did manage to fullfill a synced many-to-many RNN construction.
+On one hand, as a proof-of-concept I had already implemented RNN to learn 8-digit binary calculus using Rcpp starting from scratch (See [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)), e.g. learning $\,01111001 + 00010101 = 10001110\,$  for $\,121+21=142\,$. Because the each digit is equivalent to timestamp, shown as following figure, my proof-of-concept implementation was indeed equivalent to and did manage to fulfill a synced many-to-many RNN construction.
 
 ![binary-addition.png](resources/C911FF3D7C7E860A4082232496BDC508.png)
 
-(The green arrows indicating the direction of forward propogation within hidden layer are reversed for better illustration of binary addition.)
+(The green arrows indicating the direction of forward propagation within hidden layer are reversed for better illustration of binary addition.)
 
-On the other hand, thanks to the fact that the approach of MXNet to build model is declarative, composing computation graph is more friendly for both R users and developers. Given the fact that I am clear about theory and implementation of RNN, translating imprerative codes to declarative operations is what I am next expected to do.
+On the other hand, thanks to the fact that the approach of MXNet to build model is declarative, composing computation graph is more friendly for both R users and developers. Given the fact that I am clear about theory and implementation of RNN, translating imperative codes to declarative operations is what I am next expected to do.
 
 As a result of this proposal, the pipeline of building the same RNN is expected to be shown as following snippet which is declarative and standardized, rather than 200+ lines of customized and imperative C++ codes.
 
@@ -215,7 +215,7 @@ Fork of MXNet's repository: <https://github.com/Puriney/mxnet>.
 
 ## Travis tests
 
-My codes can directly use the Travis tests currenlty used by MXNet's main repository thus the only thing I am expected to do is to linking my repository to Travis.
+My codes can directly use the Travis tests currently used by MXNet's main repository thus the only thing I am expected to do is to linking my repository to Travis.
 
 ## Expected Commits Frequency
 
