@@ -1,4 +1,6 @@
-# Project info
+<!--# Project info-->
+
+# PROJECT INFO
 
 Project title: Deep learning with MXNet
 
@@ -6,7 +8,9 @@ Project short title (30 characters): Implement high-level APIs for user-friendly
 
 URL of project idea page: <https://github.com/rstats-gsoc/gsoc2016/wiki/Deep-learning-with-mxnet>
 
-# Bio of Student 
+<!--# Bio of Student -->
+
+# BIO OF STUDENT
 
 <!--Provide a brief (text) biography, and why you think your background qualifies you for this project.-->
 
@@ -26,7 +30,7 @@ Telephone(s): 917-756-3868
 
 Email(s): yy1533@nyu.edu
 
-# Student affiliation
+## Student affiliation
 
 Institution: New York University
 
@@ -37,101 +41,87 @@ Stage of completion: 2015.09 - 2017.06
 Contact to verify: fix-me!!!
 
 
-# Schedule Conflicts:
+## Schedule Conflicts:
 
 Off-keyboards on Sundays, otherwise there is no time schedule conflicts. I am dedicated to GSoC this summer.
 
 # MENTORS
 
-Mentor names: Qiang Kou, Yuan Tang
+## Mentor names
+
+Qiang Kou, Yuan Tang
 
 Mentor link_ids: Fix-me!!!
 
 <!--Have you been in touch with the mentors? When and how?-->
 
-Contact with Mentors:
+## Contact with Mentors
 
-| Date        	| Event                                                                        	| Media        	| Days after establishment of idea 	|
-|-------------	|------------------------------------------------------------------------------	|--------------	|----------------------------------	|
-| 17-Feb-2016 	| MXNet initiated idea page on rstats-GSoC                                     	| NA           	| 0                                	|
-| 24-Feb-2016 	| Finished a proof-of-concept of RNN via Rcpp and asked how to join in project 	| Github       	| 7                                	|
-| 2-Mar-2016  	| Submitted "PR" as test solution for first time                               	| Github       	| 14                               	|
-| 2-Mar-2016  	| Applied for participate in project and asked for potential tasks             	| Email        	| 14                               	|
-| 3-Mar-2016  	| PR merged                                                                    	| Github       	| 15                               	|
-| 3-Mar-2016  	| Mentor reminded student of F1 visa status                                    	| Email        	| 15                               	|
-| 8-Mar-2016  	| First draft of student application form                                      	| Email&Github 	| 20                               	|
+| Date      	| Event                                                                      	| Media        	|
+|-----------	|----------------------------------------------------------------------------	|--------------	|
+| 17-Feb-16 	| MXNet initiated idea page on rstats-GSoC                                   	| NA           	|
+| 24-Feb-16 	| Finished a proof-of-concept of RNN implemented in Rcpp and contact mentors 	| Github       	|
+| 2-Mar-16  	| Submitted "Pull Request" as qualification of mentor test                   	| Github       	|
+| 2-Mar-16  	| Contact mentors to express my interest in MXNet's GSoC project             	| Email        	|
+| 3-Mar-16  	| My PR being merged                                                         	| Github       	|
+| 8-Mar-16  	| First draft of student application form                                    	| Email&Github 	|
+| 10-Mar-16 	| Second draft of student application form                                   	| Github       	|
 
-# CODING PLAN & METHODS
+
+<!--# CODING PLAN & METHODS-->
 
 <!--Describe in detail your plan for completing the work. What functions will be written, how and when will you do design, how will you verify the results of your coding? Describe perceived obstacles and challenges, and how you plan to overcome them.-->
 
-In light of the open issues listed on MXNet repository and discussions with mentors, there are three problem domains in this project proposal.
+<!--# Why this proposal-->
 
-- R language specific domain where issues arise in R language layer are discussed.
-- Deep learning specific domain where useful yet absent high-level APIs for advanced models and their solutions are discussed.
-- Case study specific domain where why and how to apply MXNet to computational biology research field are discussed.
+# WHY THIS PROPOSAL
 
+**Enhancing R package of MXNet is going to provide R community a swift deep learning framework.** Supports for either advanced structure or accepted performance are not fulfilled by existed R package for deep learning, for example, nnet and deepnet. On the contrary, in Kaggle Data Science Competition, MXNet is getting popular among kagglers thanks to its ability (i.e. basic APIs of R package) to allow R users not only implement deep learning model without getting hands too wet in programming codes, but also train networks in affordable time via supporting GPU-accelerated. Therefore, the work proposed here is going to push MXNet a further step to better serve for R community.
 
-## R language specific domain
+**High-level APIs for advanced structures are absent.** Existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) built by R user. However, what if MXNet had high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN, R users could focus on data analysis and problem solving, rather than turn to figure out building those basic layers first. And increasing needs for high-level APIs are reported.
 
-### Make model structure compatible with Rdata
+<!--# Expected APIs and impacts-->
 
-Current model structure is saved via `structure(model, class="MXFeedForwardModel")`. As suggested in MXNet's issue [#362](https://github.com/dmlc/mxnet/issues/362), it involved overhead of dumping and recovering state which was not recommended for low-level API. Hence enhancements in terms of R language layer and model structure designs are proposed.
+# EXPECTED APIs AND IMPACTS
 
-There are two possible solutions suggested by discussion of MXNet's developers.
+I am planing to implement high-level functions for the following types of RNN (recurrent neural network) in light of its popularity in data science and absence in MXNet. There exists `mx.symbol.Convolution` for CNN already.
 
-1. Make model structure object via R's S4 methods.
-2. Since model structure is saved as json string stored Rdata, two helper function are needed.
+1. vanilla RNN
+2. LSTM
+2. GRU
+2. bi-directional RNN
+2. multi-layer RNN
 
-*My plan for S4 methods to save model structure* is to use the following sample function:
-
-```r
-setClass("MXFeedForwardModel",
-         slot = list(symbol = Rcpp_MXSymbol, arg.params = <mx_param_type>, aux.params = <mx_param_type>))
-```
-
-*My plan for json/Rdata methods is to add parameter* to existed functions `mx.model.load` and `mx.model.save`, which has following syntax: 
+The expected results should enable R users swiftly design a neural network. For example,  a model with vanilla RNN as hidden layer is expected to be constructed in following 3 steps rather than hundreds of R codes:
 
 ```r
-mx.model.save <- function(model, prefix, iteration, asRdata = TRUE) {}
-mx.model.load <- function(model, prefix, iteration, useRdata = TRUE) {}
+data <- mx.symbol.Variable("data")
+lay1 <- mx.symbol.vanillaRNN(data, num_hidden = 16)
+vrnn <- mx.symbol.Softmax(lay1)
 ```
 
-Alternatively *write two helper functions* suggested by [MXNet's developer](https://github.com/dmlc/mxnet/issues/362#issuecomment-157770385).
+The expected impact is that R community could not only keep enjoying the MXNet's flexibility as it wisely incorporates symbolic configuration and imperative programming together, but also have an end-to-end deep learning framework without being distracted by thinking of coding details.
 
-## Deep learning specific domain
+<!--# Coding Plans and methods-->
 
-Regular R users would find it not straightforward to use currently available basic functions, e.g. `mx.symbol.FullyConnected`, `mx.symbol.Activation` to build advanced neural networks, e.g. recurrent neural network (RNN). Hence, high-level functions for building advanced networks are highly suggested be supported by MXNet R package.
+# CODING PLANS AND METHODS
 
-There exists `mx.symbol.Convolution` for building convolution layer, but APIs for RNN are absent, as highlighted in MXNet's [issue #1420](https://github.com/dmlc/mxnet/issues/1420).
-
-### RNN
-
-*My plan is to implement high-level function supporting one-to-many, many-to-one, many-to-many, synced many-to-many RNN models*.The product of this domain is expected to be a function with following snippet.  
-
-![](http://karpathy.github.io/assets/rnn/diags.jpeg)
-(Source: <http://karpathy.github.io/2015/05/21/rnn-effectiveness/>)
-
-```r
-mx.symbol.RNN(symbol, name, hidden_dim, type = c('1toN', 'Nto1', 'NtoN', 'syncNtoN'), ...)
-```
-
-On one hand, as a proof-of-concept I had already implemented RNN to learn 8-digit binary calculus using Rcpp starting from scratch (See [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)), e.g. learning $\,01111001 + 00010101 = 10001110\,$  for $\,121+21=142\,$. Because the each digit is equivalent to timestamp, shown as following figure, my proof-of-concept implementation was indeed equivalent to and did manage to fulfill a synced many-to-many RNN construction.
+The project requires student with programming skills on Rcpp and solid knowledge of deep learning. As a proof of concept, I had already implemented RNN to learn 8-digit binary calculus using Rcpp starting from scratch (See [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)), e.g. learning $\,01111001 + 00010101 = 10001110\,$  for $\,121+21=142\,$. Because the each digit is equivalent to timestamp, shown as following figure, my proof-of-concept implementation was indeed equivalent to and did manage to fulfill a synced many-to-many RNN construction.
 
 ![binary-addition.png](resources/C911FF3D7C7E860A4082232496BDC508.png)
 
 (The green arrows indicating the direction of forward propagation within hidden layer are reversed for better illustration of binary addition.)
 
-On the other hand, thanks to the fact that the approach of MXNet to build model is declarative, composing computation graph is more friendly for both R users and developers. Given the fact that I am clear about theory and implementation of RNN, translating imperative codes to declarative operations is what I am next expected to do.
+## Four types of vanilla RNN
 
-As a result of this proposal, the pipeline of building the same RNN is expected to be shown as following snippet which is declarative and standardized, rather than 200+ lines of customized and imperative C++ codes.
+![](http://karpathy.github.io/assets/rnn/diags.jpeg)
+(Source: <http://karpathy.github.io/2015/05/21/rnn-effectiveness/>)
 
 ```r
-data <- mx.symbol.Variable("data") ## (N, input_dim=2, timestamp_dim=8)
-net  <- mx.symbol.RNN(symbol = data, name = 'rnn', hidden_dim = 16, type = 'syncNtoN')
-net <- mx.symbol.Activation(symbol = net, act.type = 'sigmoid')
-net <- mx.symbol.LogisticRegressionOutput(net)
+mx.symbol.vanillaRNN(symbol, name, hidden_dim, type = c('1toN', 'Nto1', 'NtoN', 'syncNtoN'), ...)
 ```
+
+My proof-of-concept is imperative programming while the network in built by symbolic configuration in MXNet. Therefore I plan to implement high-level API for synced many-to-many RNN at first.
 
 Once imperative-to-declarative translation were finished, solutions for composing graph of the rest three categories of RNN are expected to be straightforward, in light of the fact that these three are derivations of synced many-to-many RNN, shown as following diagram.
 
@@ -140,7 +130,7 @@ Once imperative-to-declarative translation were finished, solutions for composin
 (Operation A: suppress part of input; Operation B: suppress part of output; Operation C: combine/group the two layers highlighted in green rectangular. Figures are modified from [here](http://karpathy.github.io/2015/05/21/rnn-effectiveness/))
 
 
-### LSTM
+## LSTM
 
 LSTM is specific type of RNN while it is independently listed given its popularity.
 
@@ -149,28 +139,37 @@ LSTM is specific type of RNN while it is independently listed given its populari
 
 The developer of MXNet's Julia package once posted a step-by-step [tutorial](http://mxnetjl.readthedocs.org/en/latest/tutorial/char-lstm.html) for constructing LSTM. Therefore I am expected to follow the logics to implement symbol operation for LSTM.
 
-### GRU
+## GRU
 
-GRU is derivation of LSTM with simplified gates.
+GRU is derivation of LSTM. It combines input gate and forget gate combined as update gate, and comes up with other minor modifications.
 
 ![](http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-var-GRU.png)
 (Source: http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 
-### Bidirectional RNN
+## Bidirectional RNN
 
-Ref: <http://www.cs.toronto.edu/~graves/asru_2013.pdf>
+Within this computation graph, forward propagation and backward propagation run through their own layer.
 
-### Multi-layer RNN
+Ref: [Hybrid Speech Recognition with. Deep Bidirectional LSTM](http://www.cs.toronto.edu/~graves/asru_2013.pdf)
+
+## Multi-layer RNN
 
 ![](https://www.tensorflow.org/versions/r0.7/images/attention_seq2seq.png)
 (Source: <https://www.tensorflow.org/versions/r0.7/tutorials/seq2seq/index.html>)
 
-## Application specific domain
 
-Reproduce the CNN model published on Nature paper to draw attention of R users in bioinformatics, computational biology field.
+# PERCEIVED OBSTACLES
 
-![](http://www.nature.com/nbt/journal/v33/n8/images/nbt.3300-SF1.jpg)
-(Source: <http://www.nature.com/nbt/journal/v33/n8/full/nbt.3300.html>)
+The critical turn-over is how to translate my existed knowledge and adapt imperative implementation to MXNet's R high-level APIs, which is symbolic configuration.
+
+Fortunately, MXNet team maintains a well-documented guide for new developers, in particular the following posts stated the rules and conventions I need to follow:
+
+1. [How to Create New Operations (Layers)](http://mxnet.readthedocs.org/en/latest/tutorial/new_op_howto.html)
+2. [Operators in MXNet](https://mxnet.readthedocs.org/en/latest/developer-guide/operator.html)
+
+
+In addition, as symbols (layers) in MXNet are nothing but S4 objects, my experience in R object-oriented programming could help me solve these perceived problems.
+
 
 # TIMELINE
 
@@ -180,28 +179,48 @@ Reproduce the CNN model published on Nature paper to draw attention of R users i
 
 <!--What is your contingency plan for things not going to schedule? -->
 
-Each working period is composed of 4-days coding, 1-day for general testing, 1-day for writing documents and case studies.
+## Pre-coding period
 
-| Week    	| Mon           	| Tue           	| Wed           	| Thu           	| Fri           	| Sat        	| Project                    	|
-|---------	|---------------	|---------------	|---------------	|---------------	|---------------	|------------	|----------------------------	|
-| 5/2/16  	|               	|               	|               	|               	|               	|            	| MXNet Demo                 	|
-| 5/9/16  	|               	|               	|               	|               	|               	|            	| Paper Reading              	|
-| 5/16/16 	|               	|               	|               	|               	|               	|            	| Contact Mentor             	|
-| 5/23/16 	| Code (Starts) 	| Code          	| Code          	| Code          	| Test          	| Doc        	| RNN Many-to-Many           	|
-| 5/30/16 	| Code          	| Code          	| Test          	| Code          	| Code          	| Doc (Ends) 	| ditto                      	|
-| 6/6/16  	| Code (Starts) 	| Code          	| Code          	| Code          	| Test          	| Doc (Ends) 	| RNN 1-to-N                 	|
-| 6/13/16 	| Code (Starts) 	| Code          	| Code          	| Code          	| Test          	| Doc (Ends) 	| RNN N-to-1                 	|
-| 6/20/16 	| Eval          	| Code (Starts) 	| Code          	| Code          	| Test          	| Doc (Ends) 	| RNN N-to-N                 	|
-| 6/27/16 	| Doc           	| Doc (Starts)  	| Code          	| Code          	| Code          	| Code       	| Bi-RNN                     	|
-| 7/4/16  	| Test          	| Doc (Ends)    	| Code (Starts) 	| Code          	| Code          	| Code       	| Stack-RNN                  	|
-| 7/11/16 	| Test          	| Doc (Ends)    	| Code (Starts) 	| Code          	| Code          	| Code       	| LSTM                       	|
-| 7/18/16 	| Test          	| Doc (Ends)    	| Code (Starts) 	| Code          	| Code          	| Code       	| GRU                        	|
-| 7/25/16 	| Test          	| Doc (Ends)    	| Contact       	| Code (Starts) 	| Code          	| Code       	| Application                	|
-| 8/1/16  	| Code          	| Test (Ends)   	| Contact       	| Doc (Starts)  	| Code          	| Code       	| R-language specific domain 	|
-| 8/8/16  	| Code          	| Code          	| Test          	| Doc           	| Code          	| Code       	| ditto                      	|
-| 8/15/16 	| Code          	| Code          	| Test          	| Doc (Ends)    	| Test (Starts) 	| Test       	| Wrap                       	|
-| 8/22/16 	| Doc (Ends)    	| END           	| Eval          	| Eval          	| Eval          	| Eval       	| Final Eval                 	|
-| 8/29/16 	| SUBMIT        	|               	|               	|               	|               	|            	|                            	||
+| Start       	| End         	| Topic                                                                                                                                                                               	|
+|-------------	|-------------	|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| 25-Apr-2016 	| 1-May-2016  	| Read documents. Get familiar with **details** of code structure for neural network symbol.                                                                                              	|
+| 2-May-2016  	| 8-May-2016  	| Read documents. Get familiar with **details** of code structure of tensor computation in mxnet so that I could better adapt my RNN codes for appropriate  forward/backward propagation. 	|
+| 9-May-2016  	| 16-May-2016 	| NYU Final exam season.                                                                                                                                                                  	|
+| 17-May-2016 	| 22-May-2016 	| Contact with mentors to get started. Set up formal communication tools e.g. Gitter.                                                                                                 	|
+
+
+## Coding Period
+
+The following 4 jobs must be done when working on every API.
+
+1. Implementation of high-level API;
+2. **Testing** (see details of codes tests as sections below);
+3. **Write demos and case studies**;
+4. Submit codes and discuss with mentors to see whether they are ready to be merged into main stream.
+
+
+| Start       	| End         	| APIs             	| Demo                          	| Days 	|
+|-------------	|-------------	|------------------	|-------------------------------	|------	|
+| 23-May-2016 	| 5-Jun-2016  	| Synced Many2Many 	| Binary Addition               	| 14   	|
+| 6-Jun-2016  	| 16-Jun-2016 	| One2Many         	| Image Classification          	| 11   	|
+| 17-Jun-2016 	| 26-Jun-2016 	| Many2One         	| Char RNN                      	| 10   	|
+| 27-Jun-2016 	| 5-Jul-2016  	| Many2Many        	| Translation English to French 	| 9    	|
+| 6-Jul-2016  	| 14-Jul-2016 	| Bidirectional    	| Translation English to French 	| 9    	|
+| 15-Jul-2016 	| 24-Jul-2016 	| Stacked          	| Translation English to French 	| 10   	|
+| 25-Jul-2016 	| 7-Aug-2016  	| LSTM             	| Char RNN                      	| 14   	|
+| 8-Aug-2016  	| 21-Aug-2016 	| GRU              	| Char RNN                      	| 14   	|
+
+
+If there are extra free time, I would like to reproduce the CNN model published on Nature magazine in order to draw attention of R users in bioinformatics, computational biology field.
+
+![](http://www.nature.com/nbt/journal/v33/n8/images/nbt.3300-SF1.jpg)
+(Source: <http://www.nature.com/nbt/journal/v33/n8/full/nbt.3300.html>)
+
+## Post-coding period
+
+22-Aug-2016: Wrapping up the entire project. Because project is finishing API one-by-one, documents and tests are expected to qualified and final wrapping up will not take too long.
+
+From 23-Aug-2016 to 29-Aug-2016: Final Evaluation.
 
 # MANAGEMENT OF CODING PROJECT
 
@@ -209,13 +228,20 @@ Each working period is composed of 4-days coding, 1-day for general testing, 1-d
 
 <!--How often do you plan to commit?  What changes in commit behavior would indicate a problem?-->
 
-## My codes are fork of MXNet
+## Where are codes deployed
 
 Fork of MXNet's repository: <https://github.com/Puriney/mxnet>. 
 
-## Travis tests
+## How to test codes
 
-My codes can directly use the Travis tests currently used by MXNet's main repository thus the only thing I am expected to do is to linking my repository to Travis.
+### Travis Test
+My codes can directly use the Travis tests currently used by MXNet's main repository. Once passing, they are always ready to be merged into main stream.
+
+### R CMD check
+As it is R package, my codes should pass requirements of R CMD check. In addition, thanks to roxygen2, possible conflicts will be reported when it generates documents for functions.
+
+### Test against real data
+Writing case studies and demos for functions are good conventions of MXNet and I am expected to follow. In MXNet repository, there existed data of Penn Treebank Project for RNN, thus I could run test by applying these data on my codes.
 
 ## Expected Commits Frequency
 
@@ -228,7 +254,6 @@ Being absent for 10 days suggests I must come across with problems.
 
 <!--Describe the qualification test that you have submitted to you project mentors.  If feasible, include code, details, output, and example of similar coding problems that you have solved.-->
 
-I submitted a  "pull request" which afterwards merged (See: [here](https://github.com/dmlc/mxnet/pull/1554)) into MXNet main repository.
-
+I fixed an issue which afterwards merged (See: [here](https://github.com/dmlc/mxnet/pull/1554)) into MXNet main repository. It supports Xavier strategy to initialize weights, clipping gradient (i.e. fixing calculated gradient within a range), scheduling mini-changes for learning rate value along training process.
 
 <!--# Anything Else-->
