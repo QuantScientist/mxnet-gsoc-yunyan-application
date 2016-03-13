@@ -76,7 +76,7 @@ Mentor link_ids: **Fix-me!!!**
 
 **Enhancing R package of MXNet is going to provide R community a swift deep learning framework.** Supports for either advanced structure or accepted performance are not fulfilled by existed R package for deep learning, for example, nnet and deepnet. On the contrary, in Kaggle Data Science Competition, MXNet is getting popular among kagglers thanks to its ability (i.e. basic APIs of R package) to allow R users not only implement deep learning model without getting hands too wet in programming codes, but also train networks in affordable time via supporting GPU-accelerated. Therefore, the work proposed here is going to push MXNet a further step to better serve for R community.
 
-**High-level APIs for advanced structures are absent.** Existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) [built](https://github.com/dmlc/mxnet/issues/837#issuecomment-167210716) by R user. However, what if MXNet supports high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN, R users could focus on data analysis and problem solving, rather than figuring out how to build advanced networks first. And [increasing needs](https://github.com/dmlc/mxnet/issues/837#issuecomment-166001465) for high-level APIs of RNN are reported.
+**High-level APIs for advanced structures are absent.** Admittedly existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) is built by MXNet's python APIs and shown in official [example](https://github.com/Puriney/mxnet/tree/master/example/rnn). However, what if MXNet supports high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN dedicatd to R community, R users could focus on data analysis and problem solving, rather than figuring out how to build advanced networks first. And [increasing needs](https://github.com/dmlc/mxnet/issues/837) for high-level APIs of RNN are reported.
 
 <!--# Expected APIs and impacts-->
 
@@ -165,16 +165,18 @@ The critical turn-overs are:
 1. How to precisely adapt my knowledge and existed imperative implementation (as the proof-of-concept mentioned before) to MXNet's high-level APIs, so that R users could enjoy symbolic configuration.
 2. How to make APIs support performance as much as possible.
 
-Fortunately, MXNet team maintains a well-documented guide for new developers, in particular the following posts stated the rules and conventions I need to follow:
+For first part, I could wrap up all basic interfaces to write functions with parameters to support user-defined network structures. If necessary, I would make modifications for *R/src/symbol.cc* , etc to meet development needs. Because basic interfaces contain parameters related to GPU, wrapper function could take care of performance.
+
+For second part which is native implementation, fortunately MXNet team maintains a well-documented guide for new developers, in particular the following posts stated the rules and conventions I need to follow:
 
 1. [How to Create New Operations (Layers)](http://mxnet.readthedocs.org/en/latest/tutorial/new_op_howto.html)
 2. [Operators in MXNet](https://mxnet.readthedocs.org/en/latest/developer-guide/operator.html)
 
 For example, the implementation of CNN layer is via three source files located at directory *src/operator/* : `convolution-inl.h`, `convolution.cc`, `convolution.cu`. In the similar way, I could implement the new operators for RNN.
 
-Furthermore, MXNet's R package has already set up the fundamental interfaces for C++ implementation thus my work will not start from scratch. As a backup plan, I could wrap up basic interfaces to write a pipeline function with parameters to support user-defined network structures.
+Furthermore, MXNet's R package has already set up the fundamental interfaces thus my work will not start from scratch. 
 
-Putting things together, I could have feasible approaches to implement high-level APIs for RNN in affordable time.
+Putting things together, I could have feasible approaches to implement high-level APIs for RNNs and handle perceived problems in affordable time.
 
 # TIMELINE
 
