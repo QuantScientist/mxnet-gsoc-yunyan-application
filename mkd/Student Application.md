@@ -4,7 +4,7 @@
 
 Project title: Deep learning with MXNet
 
-Project short title (30 characters): Implement high-level APIs for user-friendly RNN construction.
+Project short title (30 characters): Implement high-level interfaces (APIs) of Recurrent Neural Network (RNN) of MXNet to achieve user-friendly network construction.
 
 URL of project idea page: <https://github.com/rstats-gsoc/gsoc2016/wiki/Deep-learning-with-mxnet>
 
@@ -22,9 +22,9 @@ URL of project idea page: <https://github.com/rstats-gsoc/gsoc2016/wiki/Deep-lea
 
 Student name: Yun Yan
 
-Melange Link_id:  fix-me!!!
+Melange Link_id:  **fix-me!!!**
 
-Student postal address: fix-me!!!
+Student postal address: 334 E 25 St, Apt 213, New York, NY, 10010
 
 Telephone(s): 917-756-3868
 
@@ -38,7 +38,7 @@ Program: Computer Science, Tandon School of Engineering
 
 Stage of completion: 2015.09 - 2017.06
 
-Contact to verify: fix-me!!!
+Contact to verify: Office of Global Services (OGS), 5 MetroTech Center, Room 259, Brooklyn, NY 11201. Tel: (646) 997-3805
 
 
 ## Schedule Conflicts:
@@ -51,7 +51,7 @@ Off-keyboards on Sundays, otherwise there is no time schedule conflicts. I am de
 
 Qiang Kou, Yuan Tang
 
-Mentor link_ids: Fix-me!!!
+Mentor link_ids: **Fix-me!!!**
 
 <!--Have you been in touch with the mentors? When and how?-->
 
@@ -64,9 +64,7 @@ Mentor link_ids: Fix-me!!!
 | 2-Mar-16  	| Submitted "Pull Request" as qualification of mentor test                   	| Github       	|
 | 2-Mar-16  	| Contact mentors to express my interest in MXNet's GSoC project             	| Email        	|
 | 3-Mar-16  	| My PR being merged                                                         	| Github       	|
-| 8-Mar-16  	| First draft of student application form                                    	| Email&Github 	|
-| 10-Mar-16 	| Second draft of student application form                                   	| Github       	|
-
+| 8-Mar-16 ~ 12-Mar-16  	| Drafts of student application form                                    	| Email&Github 	|
 
 <!--# CODING PLAN & METHODS-->
 
@@ -78,7 +76,7 @@ Mentor link_ids: Fix-me!!!
 
 **Enhancing R package of MXNet is going to provide R community a swift deep learning framework.** Supports for either advanced structure or accepted performance are not fulfilled by existed R package for deep learning, for example, nnet and deepnet. On the contrary, in Kaggle Data Science Competition, MXNet is getting popular among kagglers thanks to its ability (i.e. basic APIs of R package) to allow R users not only implement deep learning model without getting hands too wet in programming codes, but also train networks in affordable time via supporting GPU-accelerated. Therefore, the work proposed here is going to push MXNet a further step to better serve for R community.
 
-**High-level APIs for advanced structures are absent.** Existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) built by R user. However, what if MXNet had high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN, R users could focus on data analysis and problem solving, rather than turn to figure out building those basic layers first. And increasing needs for high-level APIs are reported.
+**High-level APIs for advanced structures are absent.** Existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) [built](https://github.com/dmlc/mxnet/issues/837#issuecomment-167210716) by R user. However, what if MXNet supports high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN, R users could focus on data analysis and problem solving, rather than figuring out how to build advanced networks first. And [increasing needs](https://github.com/dmlc/mxnet/issues/837#issuecomment-166001465) for high-level APIs of RNN are reported.
 
 <!--# Expected APIs and impacts-->
 
@@ -106,7 +104,9 @@ The expected impact is that R community could not only keep enjoying the MXNet's
 
 # CODING PLANS AND METHODS
 
-The project requires student with programming skills on Rcpp and solid knowledge of deep learning. As a proof of concept, I had already implemented RNN to learn 8-digit binary calculus using Rcpp starting from scratch (See [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)), e.g. learning $\,01111001 + 00010101 = 10001110\,$  for $\,121+21=142\,$. Because the each digit is equivalent to timestamp, shown as following figure, my proof-of-concept implementation was indeed equivalent to and did manage to fulfill a synced many-to-many RNN construction.
+The project requires student with programming skills on Rcpp and solid knowledge of deep learning.
+
+As a proof of concept, I had already implemented RNN to learn 8-digit binary calculus using Rcpp starting from scratch (See [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)), e.g. learning $\,01111001 + 00010101 = 10001110\,$  for $\,121+21=142\,$. Because the each digit is equivalent to timestamp, shown as following figure, my proof-of-concept implementation was indeed equivalent to and did manage to fulfill a synced many-to-many RNN construction.
 
 ![binary-addition.png](resources/C911FF3D7C7E860A4082232496BDC508.png)
 
@@ -160,16 +160,21 @@ Ref: [Hybrid Speech Recognition with. Deep Bidirectional LSTM](http://www.cs.tor
 
 # PERCEIVED OBSTACLES
 
-The critical turn-over is how to translate my existed knowledge and adapt imperative implementation to MXNet's R high-level APIs, which is symbolic configuration.
+The critical turn-overs are: 
+
+1. How to precisely adapt my knowledge and existed imperative implementation (as the proof-of-concept mentioned before) to MXNet's high-level APIs, so that R users could enjoy symbolic configuration.
+2. How to make APIs support performance as much as possible.
 
 Fortunately, MXNet team maintains a well-documented guide for new developers, in particular the following posts stated the rules and conventions I need to follow:
 
 1. [How to Create New Operations (Layers)](http://mxnet.readthedocs.org/en/latest/tutorial/new_op_howto.html)
 2. [Operators in MXNet](https://mxnet.readthedocs.org/en/latest/developer-guide/operator.html)
 
+For example, the implementation of CNN layer is via three source files located at directory *src/operator/* : `convolution-inl.h`, `convolution.cc`, `convolution.cu`. In the similar way, I could implement the new operators for RNN.
 
-In addition, as symbols (layers) in MXNet are nothing but S4 objects, my experience in R object-oriented programming could help me solve these perceived problems.
+Furthermore, MXNet's R package has already set up the fundamental interfaces for C++ implementation thus my work will not start from scratch. As a backup plan, I could wrap up basic interfaces to write a pipeline function with parameters to support user-defined network structures.
 
+Putting things together, I could have feasible approaches to implement high-level APIs for RNN in affordable time.
 
 # TIMELINE
 
@@ -237,8 +242,14 @@ Fork of MXNet's repository: <https://github.com/Puriney/mxnet>.
 ### Travis Test
 My codes can directly use the Travis tests currently used by MXNet's main repository. Once passing, they are always ready to be merged into main stream.
 
-### R CMD check
-As it is R package, my codes should pass requirements of R CMD check. In addition, thanks to roxygen2, possible conflicts will be reported when it generates documents for functions.
+### Fast Test
+As it is R package, I could use the following snippet to test the R package.
+
+```r
+R CMD check --no-examples --no-manual --no-vignettes --no-build-vignettes mxnet_*.tar.gz
+```
+
+In addition, thanks to roxygen2, possible conflicts will be reported when it generates documents for functions.
 
 ### Test against real data
 Writing case studies and demos for functions are good conventions of MXNet and I am expected to follow. In MXNet repository, there existed data of Penn Treebank Project for RNN, thus I could run test by applying these data on my codes.
