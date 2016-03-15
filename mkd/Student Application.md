@@ -22,8 +22,6 @@ URL of project idea page: <https://github.com/rstats-gsoc/gsoc2016/wiki/Deep-lea
 
 Student name: Yun Yan
 
-Melange Link_id:  **fix-me!!!**
-
 Student postal address: 334 E 25 St, Apt 213, New York, NY, 10010
 
 Telephone(s): 917-756-3868
@@ -49,9 +47,9 @@ Off-keyboards on Sundays, otherwise there is no time schedule conflicts. I am de
 
 ## Mentor names
 
-Qiang Kou, Yuan Tang
+Qiang Kou (<qkou@umail.iu.edu>)
 
-Mentor link_ids: **Fix-me!!!**
+Yuan Tang (<terrytangyuan@gmail.com>)
 
 <!--Have you been in touch with the mentors? When and how?-->
 
