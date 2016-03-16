@@ -1,4 +1,6 @@
 
+[![Gitter](https://badges.gitter.im/Puriney/mxnet-gsoc-yunyan-application.svg)](https://gitter.im/Puriney/mxnet-gsoc-yunyan-application?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 # For mentors
 
 Fast edit and view by markdown doc under *mkd* folder. See [here](https://github.com/Puriney/mxnet-gsoc-yunyan-application/blob/master/mkd/Student%20Application.md).
