@@ -26,7 +26,7 @@ Student postal address: 334 E 25 St, Apt 213, New York, NY, 10010
 
 Telephone(s): 917-756-3868
 
-Email(s): yy1533@nyu.edu
+Email(s): yy1533@nyu.edu (primary account); youryanyun@gmail.com (GSoC account).
 
 ## Student affiliation
 
@@ -74,7 +74,7 @@ Yuan Tang (<terrytangyuan@gmail.com>)
 
 **Enhancing R package of MXNet is going to provide R community a swift deep learning framework.** Supports for either advanced structure or accepted performance are not fulfilled by existed R package for deep learning, for example, nnet and deepnet. On the contrary, in Kaggle Data Science Competition, MXNet is getting popular among kagglers thanks to its ability (i.e. basic APIs of R package) to allow R users not only implement deep learning model without getting hands too wet in programming codes, but also train networks in affordable time via supporting GPU-accelerated. Therefore, the work proposed here is going to push MXNet a further step to better serve for R community.
 
-**High-level APIs for advanced structures are absent.** Admittedly existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) is built by MXNet's python APIs and shown in official [example](https://github.com/Puriney/mxnet/tree/master/example/rnn). However, what if MXNet supports high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN dedicatd to R community, R users could focus on data analysis and problem solving, rather than figuring out how to build advanced networks first. And [increasing needs](https://github.com/dmlc/mxnet/issues/837) for high-level APIs of RNN are reported.
+**High-level APIs for advanced structures are absent.** Admittedly existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) is built by MXNet's python APIs and shown in official [example](https://github.com/Puriney/mxnet/tree/master/example/rnn). However, what if MXNet supports high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN dedicated to R community, R users could focus on data analysis and problem solving, rather than figuring out how to build advanced networks first. And [increasing needs](https://github.com/dmlc/mxnet/issues/837) for high-level APIs of RNN are reported.
 
 <!--# Expected APIs and impacts-->
 
@@ -216,10 +216,12 @@ The following 4 jobs must be done when working on every API.
 | 8-Aug-2016  	| 21-Aug-2016 	| GRU              	| Char RNN                      	| 14   	|
 
 
-If there are extra free time, I would like to reproduce the CNN model published on Nature magazine in order to draw attention of R users in bioinformatics, computational biology field.
+If there are extra free time, I would like to reproduce the CNN model published on Nature magazine in order to draw attention of R users in bioinformatics, computational biology field. The results of this possible extra work can also be checked whether valid by mentors as Qiang Kou had experience in bioinformatics.
 
 ![](http://www.nature.com/nbt/journal/v33/n8/images/nbt.3300-SF1.jpg)
 (Source: <http://www.nature.com/nbt/journal/v33/n8/full/nbt.3300.html>)
+
+In sum, during working period I am glad to actively communicate with mentors to input more qualified codes into MXNet's R package in addition to works scheduled here, e.g. more demos and case studies for users, other APIs not listed here, etc.
 
 ## Post-coding period
 
