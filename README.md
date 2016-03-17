@@ -1,5 +1,5 @@
 
-[![Gitter](https://badges.gitter.im/Puriney/mxnet-gsoc-yunyan-application.svg)](https://gitter.im/Puriney/mxnet-gsoc-yunyan-application?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Puriney/GSoC-MXNet?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
 # For mentors
 
