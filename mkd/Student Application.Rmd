@@ -4,7 +4,6 @@ author: "Yun Yan"
 date: "March 18, 2016"
 output: word_document
 ---
-
 <!--# Project info-->
 
 # PROJECT INFO
@@ -21,9 +20,9 @@ URL of project idea page: <https://github.com/rstats-gsoc/gsoc2016/wiki/Deep-lea
 
 <!--Provide a brief (text) biography, and why you think your background qualifies you for this project.-->
 
-- Yun is a graduate student majoring in Computer Science at New York University with emphasis on data science. It is not surprising that he is not only familiar with regular conventions (e.g. Git) and programming languages (e.g. C++) of software development, but also has solid knowledge of theories related to neural network and other machine learning applications. As a proof-of-concept to implement high-level API of LSTM which is [one of MXNet's github issues](https://github.com/dmlc/mxnet/issues/1420), he had already built a many-to-many [RNN model](https://gist.github.com/Puriney/072a37ea8a181f0b6168) from scratch which managed to learn 8-bit binary addition calculation. Model was implemented in Rcpp which fits the language requirement of this project. Therefore the CS background supports Yun to read the source code of MXNet, communicate with mentors, identify important but absent features, and ultimately finish implementation.
+- Yun is a graduate student majoring in Computer Science at New York University with emphasis on data science. It is not surprising that he is not only familiar with regular conventions (e.g. Git) and programming languages (e.g. C++) of software development, but also has solid knowledge of theories related to neural network and other machine learning applications. As a proof-of-concept to implement high-level API of LSTM which is [one of MXNet's GitHub issues](https://github.com/dmlc/mxnet/issues/1420), he had already built a many-to-many RNN model (see [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)) from scratch which managed to learn 8-bit binary addition calculation. Model was implemented in Rcpp which fits the language requirement of this project. Therefore the CS background supports Yun to read the source code of MXNet, communicate with mentors, identify important but absent features, and ultimately finish implementation.
 - Yun is an experienced R user who has been participating in developing R package. For example, [ChIPseeker](https://bioconductor.org/packages/release/bioc/html/ChIPseeker.html), a Bioconductor package for bioinformatics analysis; [honfleuR](https://github.com/Puriney/honfleuR), an extension supporting object-oriented programming in R S4 methods for an existed R package to analyze single-cell sequencing data. Therefore his strong interest and 4-year experience in R language make him a self-motivated and competent participant to help make a powerful deep learning package dedicated to R language community.
-- Yun has rich research experience in computational biology with a Master degree in Molecular Biology. He realized deep learning is becoming a promising strategy to analyze large scale of data produced by biomedical studies. Therefore Yun has solid expert-domain knowledge and strong interest to apply deep learning to computational biology field by writing application examples for MXNet package. Therefore Yun's participation can bring to new impacts -- deep learning has a soft-landing on life sciences researches thanks to  MXNet's R package and likewise MXNet becomes more appealing to bioinformaticians and broaden user spectrum.
+- Yun has rich research experience in computational biology with a Master degree in Molecular Biology. He realized deep learning is becoming a promising strategy to analyze large scale of data produced by biomedical studies. Therefore Yun has solid expert-domain knowledge and strong interest to apply deep learning to computational biology field by writing case studies or examples for MXNet package. Therefore Yun's participation can bring to new impacts -- deep learning has a soft-landing on life sciences researches thanks to  MXNet's R package and likewise MXNet becomes more appealing to bioinformaticians and broaden user spectrum.
 
 # CONTACT INFORMATION 
 
@@ -39,7 +38,7 @@ Email(s): yy1533@nyu.edu (primary account); youryanyun@gmail.com (GSoC account).
 
 Institution: New York University
 
-Program: Computer Science, Tandon School of Engineering
+Program: Master program, Computer Science, Tandon School of Engineering
 
 Stage of completion: 2015.09 - 2017.06
 
@@ -70,6 +69,7 @@ Yuan Tang (<terrytangyuan@gmail.com>)
 | 2-Mar-16  	| Contact mentors to express my interest in MXNet's GSoC project             	| Email        	|
 | 3-Mar-16  	| My PR being merged                                                         	| Github       	|
 | 8-Mar-16 ~ 12-Mar-16  	| Drafts of student application form                                    	| Email&Github 	|
+| 13-Mar-16 | Finish draft to be reviewed by mentor | GitHub |
 
 <!--# CODING PLAN & METHODS-->
 
@@ -95,7 +95,7 @@ I am planing to implement high-level functions for the following types of RNN (r
 2. bi-directional RNN
 2. multi-layer RNN
 
-The expected results should enable R users swiftly design a neural network. For example,  a model with vanilla RNN as hidden layer is expected to be constructed in following 3 steps rather than hundreds of R codes:
+The expected results should enable R users swiftly design a neural network. For example,  a model with vanilla RNN as hidden layer is expected to be constructed in following 3 steps rather than hundreds lines of R codes:
 
 ```r
 data <- mx.symbol.Variable("data")
@@ -109,7 +109,10 @@ The expected impact is that R community could not only keep enjoying the MXNet's
 
 # CODING PLANS AND METHODS
 
-The project requires student with programming skills on Rcpp and solid knowledge of deep learning.
+The project requires student with programming skills on R/Cpp/Rcpp and solid knowledge of deep learning.
+
+
+## Proof-of-concept
 
 As a proof of concept, I had already implemented RNN to learn 8-digit binary calculus using Rcpp starting from scratch (See [Gist](https://gist.github.com/Puriney/072a37ea8a181f0b6168)), e.g. learning $\,01111001 + 00010101 = 10001110\,$  for $\,121+21=142\,$. Because the each digit is equivalent to timestamp, shown as following figure, my proof-of-concept implementation was indeed equivalent to and did manage to fulfill a synced many-to-many RNN construction.
 
@@ -117,10 +120,16 @@ As a proof of concept, I had already implemented RNN to learn 8-digit binary cal
 
 (The green arrows indicating the direction of forward propagation within hidden layer are reversed for better illustration of binary addition.)
 
+Fortunately, model construction is achieved by symbolic configuration in MXNet. Thus compared with imperative programming (shown as proof-of-concept above),  I have more convenient and feasible approach to implement advanced models. Things becomes even more easier given that I have knowledge about the model's topological structure.
+
+The topological structures of variations of RNN are listed below, and the model listed later depend on the ones stated earlier. Thus my coding plan is step-by-step, model-by-model, bottom-up.
+
 ## Four types of vanilla RNN
 
 ![](http://karpathy.github.io/assets/rnn/diags.jpeg)
-(Source: <http://karpathy.github.io/2015/05/21/rnn-effectiveness/>)
+(Source: "The Unreasonable Effectiveness of Recurrent Neural Networks" <http://karpathy.github.io/2015/05/21/rnn-effectiveness/>. Red, green, blue blocks indicate input layer, hidden layer, output layer. And input/output layer has optional time stamp settings.)
+
+The expected snippet of calling vanilla RNN is below:
 
 ```r
 mx.symbol.vanillaRNN(symbol, name, hidden_dim, type = c('1toN', 'Nto1', 'NtoN', 'syncNtoN'), ...)
@@ -132,24 +141,31 @@ Once imperative-to-declarative translation were finished, solutions for composin
 
 ![rnn-models.png](resources/43C2B745DA43E6CA3EDBD2BB1EF4BCA8.png)
 
-(Operation A: suppress part of input; Operation B: suppress part of output; Operation C: combine/group the two layers highlighted in green rectangular. Figures are modified from [here](http://karpathy.github.io/2015/05/21/rnn-effectiveness/))
+(Operation A: suppress part of input; Operation B: suppress part of output; Operation C: combine/group the two layers highlighted in green rectangular. Figures are modified from [original figure](http://karpathy.github.io/2015/05/21/rnn-effectiveness/))
 
 
 ## LSTM
 
-LSTM is specific type of RNN while it is independently listed given its popularity.
+LSTM is specific type of RNN, while it is independently listed given its popularity.
+
+It has 3 types of gate layers to control the data flow within layers: forgot, input, and output gate layers.
 
 ![](http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-chain.png)
-(Source: <http://colah.github.io/posts/2015-08-Understanding-LSTMs/>)
 
-The developer of MXNet's Julia package once posted a step-by-step [tutorial](http://mxnetjl.readthedocs.org/en/latest/tutorial/char-lstm.html) for constructing LSTM. Therefore I am expected to follow the logics to implement symbol operation for LSTM.
+(Source: "Understanding LSTM Networks" <http://colah.github.io/posts/2015-08-Understanding-LSTMs/>)
+
+The developer of MXNet's Julia package once posted a step-by-step [tutorial](http://mxnetjl.readthedocs.org/en/latest/tutorial/char-lstm.html) for constructing LSTM, in addition to established MXNet's python demos for LSTM. Therefore I am expected to follow the logics to implement symbol operation for LSTM.
+
+Implementation for LSTM API is expected to be easiest task throughout this project.
 
 ## GRU
 
 GRU is derivation of LSTM. It combines input gate and forget gate combined as update gate, and comes up with other minor modifications.
 
 ![](http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-var-GRU.png)
-(Source: http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+(Source: "Understanding LSTM Networks" <http://colah.github.io/posts/2015-08-Understanding-LSTMs/>)
+
+Following the LSTM implementation, GRU is straightforward.
 
 ## Bidirectional RNN
 
@@ -159,8 +175,18 @@ Ref: [Hybrid Speech Recognition with. Deep Bidirectional LSTM](http://www.cs.tor
 
 ## Multi-layer RNN
 
+RNNs are stacked. Self-explaining.
+
 ![](https://www.tensorflow.org/versions/r0.7/images/attention_seq2seq.png)
 (Source: <https://www.tensorflow.org/versions/r0.7/tutorials/seq2seq/index.html>)
+
+## Application in computational biology
+
+I would like to reproduce the CNN model published on Nature magazine in order to draw attention of R users in bioinformatics, computational biology field. The results of this possible extra work can also be checked whether valid by mentors as Qiang Kou had experience in bioinformatics.
+
+![](http://www.nature.com/nbt/journal/v33/n8/images/nbt.3300-SF1.jpg)
+
+(Source: [Predicting the sequence specificities of DNA- and RNA-binding proteins by deep learning](http://www.nature.com/nbt/journal/v33/n8/full/nbt.3300.html))
 
 
 # PERCEIVED OBSTACLES
@@ -170,16 +196,20 @@ The critical turn-overs are:
 1. How to precisely adapt my knowledge and existed imperative implementation (as the proof-of-concept mentioned before) to MXNet's high-level APIs, so that R users could enjoy symbolic configuration.
 2. How to make APIs support performance as much as possible.
 
-For first part, I could wrap up all basic interfaces to write functions with parameters to support user-defined network structures. If necessary, I would make modifications for *R/src/symbol.cc* , etc to meet development needs. Because basic interfaces contain parameters related to GPU, wrapper function could take care of performance.
+For first part, I could wrap up all basic interfaces to write functions with parameters to support user-defined network structures, which is the actual implementation strategy of `mx.mlp()` layer function for multilayer perceptron.
+
+If necessary, I would make modifications for *R/src/symbol.cc* etc to meet development needs. For example, MXNet's develop modified *symbol.cc* to solve issue reported [here](https://github.com/dmlc/mxnet/issues/837#issuecomment-166937031) which asked for channel slicing to build LSTM.
+
+In addition, basic interfaces contain parameters related to GPU, wrapper function could take care of performance.
+
+Therefore wrapper-function is going to be qualified and feasible strategy.
 
 For second part which is native implementation, fortunately MXNet team maintains a well-documented guide for new developers, in particular the following posts stated the rules and conventions I need to follow:
 
 1. [How to Create New Operations (Layers)](http://mxnet.readthedocs.org/en/latest/tutorial/new_op_howto.html)
 2. [Operators in MXNet](https://mxnet.readthedocs.org/en/latest/developer-guide/operator.html)
 
-For example, the implementation of CNN layer is via three source files located at directory *src/operator/* : `convolution-inl.h`, `convolution.cc`, `convolution.cu`. In the similar way, I could implement the new operators for RNN.
-
-Furthermore, MXNet's R package has already set up the fundamental interfaces thus my work will not start from scratch. 
+For example, the implementation of CNN layer is via three source files located at directory *src/operator/* : `convolution-inl.h`, `convolution.cc`, `convolution.cu`. In the similar way, I could implement the new operators for RNN, if necessary. Furthermore, MXNet's R package has already set up the fundamental interfaces thus my work will not start from scratch. 
 
 Putting things together, I could have feasible approaches to implement high-level APIs for RNNs and handle perceived problems in affordable time.
 
@@ -219,14 +249,13 @@ The following 4 jobs must be done when working on every API.
 | 27-Jun-2016 	| 5-Jul-2016  	| Many2Many        	| Translation English to French 	| 9    	|
 | 6-Jul-2016  	| 14-Jul-2016 	| Bidirectional    	| Translation English to French 	| 9    	|
 | 15-Jul-2016 	| 24-Jul-2016 	| Stacked          	| Translation English to French 	| 10   	|
-| 25-Jul-2016 	| 7-Aug-2016  	| LSTM             	| Char RNN                      	| 14   	|
-| 8-Aug-2016  	| 21-Aug-2016 	| GRU              	| Char RNN                      	| 14   	|
+| 25-Jul-2016 	| 10-Aug-2016  	| LSTM and GRU             	| Char RNN                      	| 17   	|
 
+| Start         | End           | Application              | Demo                              | Days  |
+|-------------  |-------------  |------------------ |-------------------------------    |------ |
+| 11-Aug-2016  	| 21-Aug-2016 	| Case Study of computational biology              	| Nature Paper                      	| 11   	|
 
-If there are extra free time, I would like to reproduce the CNN model published on Nature magazine in order to draw attention of R users in bioinformatics, computational biology field. The results of this possible extra work can also be checked whether valid by mentors as Qiang Kou had experience in bioinformatics.
-
-![](http://www.nature.com/nbt/journal/v33/n8/images/nbt.3300-SF1.jpg)
-(Source: <http://www.nature.com/nbt/journal/v33/n8/full/nbt.3300.html>)
+(*Days* column includes Sundays just in case)
 
 In sum, during working period I am glad to actively communicate with mentors to input more qualified codes into MXNet's R package in addition to works scheduled here, e.g. more demos and case studies for users, other APIs not listed here, etc.
 
