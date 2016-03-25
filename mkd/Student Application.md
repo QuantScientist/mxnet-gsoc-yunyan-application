@@ -4,7 +4,7 @@
 
 Project title: Deep learning with MXNet
 
-Project short title (30 characters): Implement high-level interfaces (APIs) of Recurrent Neural Network (RNN) of MXNet to achieve user-friendly network construction.
+Project short title (30 characters): Implement high-level interfaces (APIs) of Recurrent Neural Network (RNN) of MXNet to achieve user-friendly network construction for R community.
 
 URL of project idea page: <https://github.com/rstats-gsoc/gsoc2016/wiki/Deep-learning-with-mxnet>
 
@@ -26,7 +26,7 @@ Student postal address: 334 E 25 St, Apt 213, New York, NY, 10010
 
 Telephone(s): 917-756-3868
 
-Email(s): yy1533@nyu.edu (primary account); youryanyun@gmail.com (GSoC account).
+Email(s): yy1533@nyu.edu (primary account); youryanyun@gmail.com (acount for sharing draft).
 
 ## Student affiliation
 
@@ -237,19 +237,19 @@ The following 4 jobs must be done when working on every API.
 
 | Start       	| End         	| APIs             	| Demo                          	| Days 	|
 |-------------	|-------------	|------------------	|-------------------------------	|------	|
-| 23-May-2016 	| 5-Jun-2016  	| Synced Many2Many 	| Binary Addition               	| 14   	|
-| 6-Jun-2016  	| 16-Jun-2016 	| One2Many         	| Image Classification          	| 11   	|
-| 17-Jun-2016 	| 26-Jun-2016 	| Many2One         	| Char RNN                      	| 10   	|
-| 27-Jun-2016 	| 5-Jul-2016  	| Many2Many        	| Translation English to French 	| 9    	|
-| 6-Jul-2016  	| 14-Jul-2016 	| Bidirectional    	| Translation English to French 	| 9    	|
-| 15-Jul-2016 	| 24-Jul-2016 	| Stacked          	| Translation English to French 	| 10   	|
-| 25-Jul-2016 	| 10-Aug-2016  	| LSTM and GRU             	| Char RNN                      	| 17   	|
+| 23-May-2016 	| 5-Jun-2016  	| Synced Many2Many 	| Binary Addition               	| 12   	|
+| 6-Jun-2016  	| 16-Jun-2016 	| One2Many         	| Image Classification          	| 10   	|
+| 17-Jun-2016 	| 26-Jun-2016 	| Many2One         	| Char RNN                      	| 8   	|
+| 27-Jun-2016 	| 5-Jul-2016  	| Many2Many        	| Translation English to French 	| 8    	|
+| 6-Jul-2016  	| 14-Jul-2016 	| Bidirectional    	| Translation English to French 	| 8    	|
+| 15-Jul-2016 	| 24-Jul-2016 	| Stacked          	| Translation English to French 	| 8   	|
+| 25-Jul-2016 	| 10-Aug-2016  	| LSTM and GRU             	| Char RNN                      	| 15   	|
 
-| Start         | End           | Application              | Demo                              | Days  |
+| Start         | End           | Application              | Reference                              | Days  |
 |-------------  |-------------  |------------------ |-------------------------------    |------ |
-| 11-Aug-2016  	| 21-Aug-2016 	| Case Study of computational biology              	| Nature Paper                      	| 11   	|
+| 11-Aug-2016  	| 21-Aug-2016 	| Case Study of computational biology              	| Nature Paper                      	| 9   	|
 
-(*Days* column includes Sundays just in case)
+(*Days* column excludes Sundays)
 
 In sum, during working period I am glad to actively communicate with mentors to input more qualified codes into MXNet's R package in addition to works scheduled here, e.g. more demos and case studies for users, other APIs not listed here, etc.
 

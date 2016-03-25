@@ -2,15 +2,20 @@
 title: "Student Application for R in GSoC-2016"
 author: "Yun Yan"
 date: "March 18, 2016"
-output: word_document
+output:
+  pdf_document:
+    keep_tex: yes
+    number_sections: yes
+  word_document: default
 ---
+
 <!--# Project info-->
 
 # PROJECT INFO
 
 Project title: Deep learning with MXNet
 
-Project short title (30 characters): Implement high-level interfaces (APIs) of Recurrent Neural Network (RNN) of MXNet to achieve user-friendly network construction.
+Project short title (30 characters): Implement high-level interfaces (APIs) of Recurrent Neural Network (RNN) of MXNet to achieve user-friendly network construction for R community.
 
 URL of project idea page: <https://github.com/rstats-gsoc/gsoc2016/wiki/Deep-learning-with-mxnet>
 
@@ -32,7 +37,7 @@ Student postal address: 334 E 25 St, Apt 213, New York, NY, 10010
 
 Telephone(s): 917-756-3868
 
-Email(s): yy1533@nyu.edu (primary account); youryanyun@gmail.com (GSoC account).
+Email(s): yy1533@nyu.edu (primary account); youryanyun@gmail.com (acount for sharing draft).
 
 ## Student affiliation
 
@@ -81,7 +86,7 @@ Yuan Tang (<terrytangyuan@gmail.com>)
 
 **Enhancing R package of MXNet is going to provide R community a swift deep learning framework.** Supports for either advanced structure or accepted performance are not fulfilled by existed R package for deep learning, for example, nnet and deepnet. On the contrary, in Kaggle Data Science Competition, MXNet is getting popular among kagglers thanks to its ability (i.e. basic APIs of R package) to allow R users not only implement deep learning model without getting hands too wet in programming codes, but also train networks in affordable time via supporting GPU-accelerated. Therefore, the work proposed here is going to push MXNet a further step to better serve for R community.
 
-**High-level APIs for advanced structures are absent.** Admittedly existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) is built by MXNet's python APIs and shown in official [example](https://github.com/Puriney/mxnet/tree/master/example/rnn). However, what if MXNet supports high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN dedicated to R community, R users could focus on data analysis and problem solving, rather than figuring out how to build advanced networks first. And [increasing needs](https://github.com/dmlc/mxnet/issues/837) for high-level APIs of RNN are reported.
+**High-level APIs for advanced structures are absent.** Admittedly existed basic functions of MXNet's R package are so modularized, self-explaining, well-documented that could be used in combinations to design advanced networks, for example, LSTM (long-short term memory network) is built by MXNet's python APIs and shown in official [tutorial](https://github.com/Puriney/mxnet/tree/master/example/rnn). However, what if MXNet supports high-level APIs for LSTM, GRU, bidirectional RNN and other types of RNN dedicated to R community, R users could focus on data analysis and problem solving, rather than figuring out how to build advanced networks first. And increasing needs (see [issue](https://github.com/dmlc/mxnet/issues/837)) for high-level APIs of RNN are reported.
 
 <!--# Expected APIs and impacts-->
 
@@ -154,9 +159,7 @@ It has 3 types of gate layers to control the data flow within layers: forgot, in
 
 (Source: "Understanding LSTM Networks" <http://colah.github.io/posts/2015-08-Understanding-LSTMs/>)
 
-The developer of MXNet's Julia package once posted a step-by-step [tutorial](http://mxnetjl.readthedocs.org/en/latest/tutorial/char-lstm.html) for constructing LSTM, in addition to established MXNet's python demos for LSTM. Therefore I am expected to follow the logics to implement symbol operation for LSTM.
-
-Implementation for LSTM API is expected to be easiest task throughout this project.
+The developer of MXNet's Julia package once posted a step-by-step [tutorial](http://mxnetjl.readthedocs.org/en/latest/tutorial/char-lstm.html) for constructing LSTM, in addition to established MXNet's python demos for LSTM. Therefore I am expected to follow the logics to implement symbol operation for LSTM. Implementation for LSTM API is expected to be easiest task throughout this project.
 
 ## GRU
 
@@ -243,19 +246,19 @@ The following 4 jobs must be done when working on every API.
 
 | Start       	| End         	| APIs             	| Demo                          	| Days 	|
 |-------------	|-------------	|------------------	|-------------------------------	|------	|
-| 23-May-2016 	| 5-Jun-2016  	| Synced Many2Many 	| Binary Addition               	| 14   	|
-| 6-Jun-2016  	| 16-Jun-2016 	| One2Many         	| Image Classification          	| 11   	|
-| 17-Jun-2016 	| 26-Jun-2016 	| Many2One         	| Char RNN                      	| 10   	|
-| 27-Jun-2016 	| 5-Jul-2016  	| Many2Many        	| Translation English to French 	| 9    	|
-| 6-Jul-2016  	| 14-Jul-2016 	| Bidirectional    	| Translation English to French 	| 9    	|
-| 15-Jul-2016 	| 24-Jul-2016 	| Stacked          	| Translation English to French 	| 10   	|
-| 25-Jul-2016 	| 10-Aug-2016  	| LSTM and GRU             	| Char RNN                      	| 17   	|
+| 23-May-2016 	| 5-Jun-2016  	| Synced Many2Many 	| Binary Addition               	| 12   	|
+| 6-Jun-2016  	| 16-Jun-2016 	| One2Many         	| Image Classification          	| 10   	|
+| 17-Jun-2016 	| 26-Jun-2016 	| Many2One         	| Char RNN                      	| 8   	|
+| 27-Jun-2016 	| 5-Jul-2016  	| Many2Many        	| Translation English to French 	| 8    	|
+| 6-Jul-2016  	| 14-Jul-2016 	| Bidirectional    	| Translation English to French 	| 8    	|
+| 15-Jul-2016 	| 24-Jul-2016 	| Stacked          	| Translation English to French 	| 8   	|
+| 25-Jul-2016 	| 10-Aug-2016  	| LSTM and GRU             	| Char RNN                      	| 15   	|
 
-| Start         | End           | Application              | Demo                              | Days  |
+| Start         | End           | Application              | Reference                              | Days  |
 |-------------  |-------------  |------------------ |-------------------------------    |------ |
-| 11-Aug-2016  	| 21-Aug-2016 	| Case Study of computational biology              	| Nature Paper                      	| 11   	|
+| 11-Aug-2016  	| 21-Aug-2016 	| Case Study of computational biology              	| Nature Paper                      	| 9   	|
 
-(*Days* column includes Sundays just in case)
+(*Days* column excludes Sundays)
 
 In sum, during working period I am glad to actively communicate with mentors to input more qualified codes into MXNet's R package in addition to works scheduled here, e.g. more demos and case studies for users, other APIs not listed here, etc.
 
@@ -303,6 +306,283 @@ Being absent for 10 days suggests I must come across with problems.
 
 <!--Describe the qualification test that you have submitted to you project mentors.  If feasible, include code, details, output, and example of similar coding problems that you have solved.-->
 
-I fixed an issue which afterwards merged (See: [here](https://github.com/dmlc/mxnet/pull/1554)) into MXNet main repository. It supports Xavier strategy to initialize weights, clipping gradient (i.e. fixing calculated gradient within a range), scheduling mini-changes for learning rate value along training process.
+I fixed an issue which afterwards **merged** (See: [here](https://github.com/dmlc/mxnet/pull/1554)) into MXNet main repository, thus I was marked as potential student for this project.
 
+It supports following features: 
+
+- Xavier strategy to initialize weights
+- Clipping gradient (i.e. fixing calculated gradient within a range)
+- Scheduling mini-changes for learning rate value along training process.
+
+Passing the tests suggest that I am familiar with MXNet's codes structure and ready to participate in R language project of MXNet in GSoC-2016.
 <!--# Anything Else-->
+
+
+```r
+// 
+// Yun Yan
+// 
+// [[Rcpp::plugins(cpp11)]]
+#include <bitset>
+#include <unordered_set>
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+
+// #include <RcppEigen.h>
+//// [[Rcpp::depends(RcppEigen)]]
+
+using namespace Rcpp;
+// using namespace Eigen;
+using namespace arma;
+
+
+// Using Rcpp to reproduce "RNN in python"
+
+//' Sigmoid function
+//'
+//' @param x A numeric vector.
+//' @export
+// [[Rcpp::export]]
+NumericVector sigmoid(NumericVector x) {
+  NumericVector ret = 1 / (1 + exp(-1 * x));
+  return ret;
+}
+
+//' First derivative of sigmoid function
+//'
+//' @param x A numeric vector.
+//' @export
+// [[Rcpp::export]]
+NumericVector sigmoid_deriv(NumericVector x) {
+  return x * (1 - x);
+}
+
+// [[Rcpp::export]]
+NumericMatrix dotprodmm(NumericMatrix a, NumericMatrix b) {
+  // dotprod = matrix %*% matrix
+  mat aa = as<mat>(a);
+  mat bb = as<mat>(b);
+  mat cc = aa * bb;
+  return(wrap(cc));
+}
+
+// [[Rcpp::export]]
+NumericMatrix dotprodvm(NumericVector a, NumericMatrix b) {
+  // dotprod = vector %*% matrix
+  vec a2 = as<vec>(a); // vector to 1-by-n matrix
+  int n = a.size();
+  mat aa;
+  aa.insert_cols(0, a2);
+  aa.reshape(1, n);
+
+  mat bb = as<mat>(b);
+  mat cc = aa * bb;
+  return(wrap(cc));
+}
+
+// [[Rcpp::export]]
+NumericVector m2v(NumericMatrix x){
+  // matrix to n-by-1 pseudo-vector
+  mat mx = as<mat>(x);
+  vec ret = vectorise(mx);
+  return(wrap(ret));
+}
+
+// [[Rcpp::export]]
+NumericMatrix v2m(NumericVector v, int nrow, int ncol){
+  NumericMatrix out(nrow, ncol);
+  for (int i = 0; i < v.size(); i++ ){
+    out[i] = v[i];
+  }
+  return out;
+}
+
+// [[Rcpp::export]]
+NumericMatrix InitialMatrix(int nrow, int ncol, bool fill = false){
+  int n = nrow * ncol;
+  NumericMatrix ret(nrow, ncol);
+  NumericVector::iterator i = ret.begin();
+  NumericVector::iterator j;
+  NumericVector val;
+  if (fill == true) {
+    val = rep(NumericVector::create(0.1), n);
+  } else {
+    val = runif(n);
+  }
+  for (j = val.begin(); j != val.end(); ++i, ++j) {
+    *i = *j;
+  }
+  return clone(ret);
+}
+
+// [[Rcpp::export]]
+NumericMatrix dotrans(NumericMatrix x){
+  mat xx = as<mat>(x);
+  return(wrap(xx.t()));
+}
+
+// [[Rcpp::export]]
+List RNN_Train(NumericVector A, NumericVector B, bool verbose){
+  // network basic parameters
+  double alpha = 0.1;
+  int input_dim = 2;
+  int hidden_dim = 16;
+  int output_dim = 1;
+  int const bin_dim = 8;
+
+  // network weights; [final output]
+  NumericMatrix syn0 = 2 * InitialMatrix(input_dim, hidden_dim) - 1;
+  NumericMatrix syn1 = 2 * InitialMatrix(hidden_dim, output_dim) - 1;
+  NumericMatrix synh = 2 * InitialMatrix(hidden_dim, hidden_dim) - 1;
+//   syn0 = syn0 * 0 + 0.1;
+//   syn1 = syn1 * 0 + 0.1;
+//   synh = synh * 0 + 0.1;
+
+  NumericMatrix syn0_up = InitialMatrix(input_dim, hidden_dim) * 0;
+  NumericMatrix syn1_up = InitialMatrix(hidden_dim, output_dim) * 0;
+  NumericMatrix synh_up = InitialMatrix(hidden_dim, hidden_dim) * 0;
+
+  // correct answer
+  NumericVector C = A + B;
+
+  int N = A.size();
+  for (int smp_i = 0; smp_i < N; smp_i ++) { // iterate each sample
+    if (verbose) {
+      Rcout << "## Sample: " << smp_i << std::endl;
+      Rcout << "syn0(0,0) = " << syn0(0, 0) << std::endl;
+    }
+    int aint = A[smp_i];
+    int bint = B[smp_i];
+    int cint = C[smp_i];
+    std::bitset<bin_dim> a(aint);
+    std::bitset<bin_dim> b(bint);
+    std::bitset<bin_dim> c(cint);
+    NumericVector cHat(bin_dim); // RNN learning binary digit
+
+    double err_sum = 0.0;
+
+    List l2_deltas;
+    List l1_vals;
+    l1_vals.push_back(rep(NumericVector::create(0), hidden_dim));
+
+    // FP begins
+    if (verbose ) Rcout << "-- FP" << std::endl;
+    for (std::size_t i = 0; i < a.size(); ++i) { // iterate time-steps
+      // input and output of each time-step
+      NumericVector x = NumericVector::create(a[i], // Notice bit-set operator
+                                              b[i]); // right-most
+      NumericVector y = NumericVector::create(c[i]);
+      // hidden_layer ~ input + prev_hidden
+      NumericVector l1 = sigmoid(dotprodvm(x, syn0) +
+        dotprodvm(as<NumericVector>(l1_vals[l1_vals.size() - 1]), synh));
+                                 
+      // output layer
+      NumericVector l2 = sigmoid(dotprodvm(l1, syn1));
+      // error at output layer
+      NumericVector l2_err = y - l2;
+      err_sum += sum(abs(l2_err));
+      l2_deltas.push_back(l2_err * sigmoid_deriv(l2));
+
+      if (verbose) {
+        Rcout << ">> sample " << smp_i << "pos" << i << "=" << x << std::endl;
+        Rcout << a[bin_dim - i - 1] << std::endl;
+        Rcout << l2_err << std::endl;
+      }
+
+      // save output to be displayed
+      cHat[bin_dim -i -1] = round(l2[0]);
+      // save hidden layer to be used for next time-step
+      l1_vals.push_back(clone(l1));
+    }
+    // FP ends
+
+    if (verbose) {
+      for (List::iterator li = l1_vals.begin(); li != l1_vals.end(); li ++){
+        Rcout << "l1 vals: " << as<NumericVector>(*li) << std::endl;
+      }
+    }
+
+    // BP begins
+    if (verbose) Rcout << "-- BP" << std::endl;
+    // layer-1 at "next-time"-step
+    NumericVector future_l1_delta = rep(NumericVector::create(0), hidden_dim);
+    for (std::size_t i = 0; i < a.size(); ++i) {
+      NumericVector x = NumericVector::create(a[bin_dim - i - 1],
+                                              b[bin_dim - i - 1]);
+      NumericVector l1 = l1_vals[l1_vals.size() - i - 1];
+      NumericVector l1_prev = l1_vals[l1_vals.size() - i -2];
+      // delta at output layer
+      NumericVector l2_delta = l2_deltas[l2_deltas.size() -i - 1];
+      // delta at hidden layer
+      NumericVector l1_delta = (dotprodvm(l2_delta, dotrans(syn1)) +
+                               dotprodvm(future_l1_delta, dotrans(synh))) *
+                               sigmoid_deriv(l1);
+      // collect updates untill all time-steps finished
+      syn1_up += dotprodmm(v2m(l1, l1.size(), 1),
+                           v2m(l2_delta, 1, l2_delta.size()));
+      synh_up += dotprodmm(v2m(l1_prev, l1_prev.size(), 1),
+                           v2m(l1_delta, 1, l1_delta.size()));
+      syn0_up += dotprodmm(v2m(x, x.size(), 1),
+                           v2m(l1_delta, 1, l1_delta.size()));
+
+      future_l1_delta = l1_delta;
+
+      if (verbose){
+        Rcout << "bp input at pos: " << i << "=" << x << std::endl;
+        Rcout << "future delta: " << future_l1_delta << std::endl;
+      }
+    }
+    // BP ends here
+
+    // Update netowrk parameters
+    syn0 += (syn0_up * alpha);
+    syn1 += (syn1_up * alpha);
+    synh += (synh_up * alpha);
+
+    syn0_up = InitialMatrix(input_dim, hidden_dim) * 0;
+    syn1_up = InitialMatrix(hidden_dim, output_dim) * 0;
+    synh_up = InitialMatrix(hidden_dim, hidden_dim) * 0;
+
+    if (verbose) {
+      Rcout << "!!After" << std::endl;
+      Rcout << syn0(0, 0) << syn0(0, 1) << syn0(1, 0) << syn0(1, 1) << std::endl;
+      Rcout << syn1(0, 0) << syn1(1, 0) << syn1(2, 0) << syn1(0, 3) << std::endl;
+      Rcout << synh(0, 0) << synh(0, 1) << synh(1, 0) << synh(1, 1) << std::endl;
+      Rcout << syn0_up(1, 2) << std::endl;
+    }
+
+    if (!verbose && smp_i % 1000 == 0 ){
+      Rcout << "Sample " << smp_i << std::endl;
+      Rcout << "Overall Error: " << err_sum << std::endl;
+      Rcout << "Pred: [" << cHat << "]" << std::endl;
+      Rcout << "True: " << c.to_string() << std::endl;
+      double cHatInt = 0.0;
+      for (int i = 0; i < cHat.size(); i ++){
+        cHatInt += pow(2.0, cHat.size() - i - 1) * cHat[i];
+      }
+      Rcout << "Calc Binary: " << std::endl << a << std::endl << b << std::endl;
+      Rcout << "Calc Decimal: " << aint << "+" << bint << "=" << cHatInt << std::endl;
+      Rcout << "----" << std::endl;
+    }
+
+  }
+
+  List syn = List::create(_["syn0"] = syn0,
+                          _["syn1"] = syn1,
+                          _["synh"] = synh);
+  return syn;
+}
+
+/*** R
+require(Rcpp)
+require(RcppArmadillo)
+require(RcppEigen)
+set.seed(2016)
+max_num <- 2^8 -1
+n <- 10000
+A <- c(sample(1:(max_num/2), n, replace = T), 1)
+B <- c(sample(1:(max_num/2), n, replace = T), 1)
+vFlag <- F
+rnn_fit <- RNN_Train(A, B, vFlag)
+*/
+```
