@@ -1,5 +1,8 @@
 
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Puriney/GSoC-MXNet?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+Application failed
+
+---
+
 
 # For mentors
 
@@ -16,3 +19,7 @@ from markdown thus not final version)
   implementation of issue of `lr_gradient`.
 - Generate formal PDF via LaTex.
 - Mentor review and submit to Google by Mar 14.
+
+---
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
